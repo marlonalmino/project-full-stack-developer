@@ -83,5 +83,17 @@ const callback3 = (_req, res) => {
 }
 app.get('/testMultipleHandlersArray', [callback1, callback2, callback3])
 
+// route
+app.route('/testRoute')
+  .get((_req, res) => {
+    res.send('/testRoute GET')
+  })
+  .post((_req, res) => {
+    res.send('/testRoute POST')
+  })
+  .delete((_req, res) => {
+    res.send('/testRoute DELETE')
+  })
+
 // Criando o servidor
 app.listen(3000, () => console.log('API Started!'))
