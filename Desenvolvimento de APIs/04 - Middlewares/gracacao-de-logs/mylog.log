@@ -1,0 +1,7 @@
+2021-10-28T18:39:40.845Z [my-app] error: Error log
+2021-10-28T18:39:40.847Z [my-app] warn: Warn log
+2021-10-28T18:39:40.847Z [my-app] info: Info log
+2021-10-28T18:39:40.847Z [my-app] verbose: Verbose log
+2021-10-28T18:39:40.847Z [my-app] debug: Debug log
+2021-10-28T18:39:40.847Z [my-app] silly: Silly log
+2021-10-28T18:39:40.847Z [my-app] info: Hello with parameter!
