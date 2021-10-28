@@ -1,4 +1,4 @@
-import express from "express"
+import express, { response } from "express"
 
 const app = express()
 // Serve para trabalharmos com json nas requisições
@@ -48,9 +48,40 @@ app.get(/.*Red$/, (_req, res) => {
   res.send('/.*Red$/')
 })
 
+// parametros na rota
 app.get('/testParam/:id', (req, res) => {
   res.send(req.params.id)
 })
+
+// parametros via query
+// Ex: /testQuery?nome=marlon&idade=22
+app.get('/testQuery', (req, res) => {
+  res.send(req.query)
+})
+
+// next - Podem haver n funções, mas a última obrigatoriamente tem que retornar algo ou finalizar
+app.get('/testMultipleHandlers', (_req, _res, next) => {
+  console.log('Callback 1')
+  next()
+}, (_req, res) => {
+  console.log('Callback 2')
+  res.end()
+})
+
+// next com array
+const callback1 = (_req, _res, next) => {
+  console.log('callback 1')
+  next()
+}
+const callback2 = (_req, _res, next) => {
+  console.log('callback 2')
+  next()
+}
+const callback3 = (_req, res) => {
+  console.log('callback 3')
+  res.end()
+}
+app.get('/testMultipleHandlersArray', [callback1, callback2, callback3])
 
 // Criando o servidor
 app.listen(3000, () => console.log('API Started!'))
