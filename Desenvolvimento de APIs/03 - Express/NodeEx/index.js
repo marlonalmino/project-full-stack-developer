@@ -2,7 +2,7 @@ import express, { response } from "express"
 
 const app = express()
 // Serve para trabalharmos com json nas requisições
-//app.use(express.json)
+//app.use(express.json())
 
 /* Requisições com Express */
 app.get('/', (_req, res) => {
