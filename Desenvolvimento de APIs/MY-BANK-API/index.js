@@ -27,6 +27,10 @@ global.logger = winston.createLogger({
 const app = express()
 app.use(express.json())
 
+// Global CORS - Libera todos os endpoints da API
+//app.use(cors())
+app.use(express.static('public'))
+
 app.use('/account', accountsRouter)
 
 app.listen(3000, async () => {

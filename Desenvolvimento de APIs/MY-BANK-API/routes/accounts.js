@@ -33,7 +33,8 @@ router.post('/', async (req, res, next) => {
   }
 })
 
-router.get('/', async (_req, res, next) => {
+// Passando o CORS na rota libera apenas o endpoint especificado
+router.get('/', cors(), async (_req, res, next) => {
   try {
     const data = JSON.parse(await readFile(global.fileName))
 
