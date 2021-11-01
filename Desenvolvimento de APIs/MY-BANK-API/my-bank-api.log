@@ -1,0 +1,5 @@
+2021-11-01T18:43:56.731Z [my-bank-api.log] info: API Started and File Created!
+2021-11-01T18:44:43.099Z [my-bank-api.log] error: ENOENT: no such file or directory, open 'C:\repo\Estudos\FullStack-with-Node\Desenvolvimento de APIs\MY-BANK-API\accounts.json'
+2021-11-01T18:45:37.433Z [my-bank-api.log] info: API Started and File Created!
+2021-11-01T18:45:48.415Z [my-bank-api.log] error: POST /account - ENOENT: no such file or directory, open 'C:\repo\Estudos\FullStack-with-Node\Desenvolvimento de APIs\MY-BANK-API\accounts.json'
+2021-11-01T18:46:29.076Z [my-bank-api.log] info: API Started and File Created!
