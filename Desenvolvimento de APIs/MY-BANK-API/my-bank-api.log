@@ -3,3 +3,13 @@
 2021-11-01T18:45:37.433Z [my-bank-api.log] info: API Started and File Created!
 2021-11-01T18:45:48.415Z [my-bank-api.log] error: POST /account - ENOENT: no such file or directory, open 'C:\repo\Estudos\FullStack-with-Node\Desenvolvimento de APIs\MY-BANK-API\accounts.json'
 2021-11-01T18:46:29.076Z [my-bank-api.log] info: API Started and File Created!
+2021-11-01T18:52:24.531Z [my-bank-api.log] info: API Started!
+2021-11-01T18:53:37.451Z [my-bank-api.log] error: POST /account - Name e Balance são obrigatórios.
+2021-11-01T18:54:48.492Z [my-bank-api.log] info: API Started!
+2021-11-01T18:56:19.551Z [my-bank-api.log] info: API Started!
+2021-11-01T18:59:11.967Z [my-bank-api.log] info: API Started!
+2021-11-01T19:01:13.469Z [my-bank-api.log] info: API Started!
+2021-11-01T19:02:38.334Z [my-bank-api.log] info: API Started!
+2021-11-01T19:04:10.803Z [my-bank-api.log] info: API Started!
+2021-11-01T19:04:14.355Z [my-bank-api.log] info: API Started!
+2021-11-01T19:04:59.824Z [my-bank-api.log] info: API Started!
