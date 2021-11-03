@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import User from './User'
 
 export default class Users extends Component {
   constructor() {
@@ -37,10 +38,17 @@ export default class Users extends Component {
     return (
       <div>
         <p>Componente Users visível por {secondsVisible}</p>
-        {users.map(user => {
-          const { login, name, picture } = user
-          return <p key={login.uuid}>{name.first} {name.last}</p>
-        })}</div>
+        <ul>
+          {users.map(user => {
+            const { login } = user
+            return (
+              <li key={login.uuid}>
+                <User user={user} />
+              </li>
+            )
+          })}
+        </ul>
+      </div>
     )
   }
 }
