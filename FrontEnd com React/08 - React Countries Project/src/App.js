@@ -18,8 +18,8 @@ export default class App extends Component {
     const res = await fetch('https://restcountries.com/v3.1/all')
     const json = await res.json()
 
-    const allCountries = json.map(
-      ({ translations, ccn3, flags, population }) => {
+    const allCountries = json
+      .map(({ translations, ccn3, flags, population }) => {
         return {
           id: ccn3,
           flag: flags.png,
@@ -27,8 +27,10 @@ export default class App extends Component {
           filterName: translations.por.common.toLowerCase(),
           population,
         }
-      },
-    )
+      })
+      .sort((a, b) => {
+        return a.name.localeCompare(b.name)
+      })
 
     const filteredPopulation = this.calculatePopulationFrom(allCountries)
 
