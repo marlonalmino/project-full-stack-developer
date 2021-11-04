@@ -8,9 +8,9 @@ export default class Countries extends Component {
     return (
       <div>
         <ul>
-          {countries.map((country) => {
+          {countries.map((country, index) => {
             return (
-              <li key={country.id}>
+              <li key={index}>
                 <Country country={country} />
               </li>
             )

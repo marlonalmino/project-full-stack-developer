@@ -8,6 +8,8 @@ export default class App extends Component {
 
     this.state = {
       allCountries: [],
+      filteredCountries: [],
+      filter: '',
     }
   }
 
@@ -21,6 +23,7 @@ export default class App extends Component {
           id: ccn3,
           flag: flags.png,
           name: translations.por.common,
+          filterName: translations.por.common.toLowerCase(),
           population,
         }
       },
@@ -28,20 +31,35 @@ export default class App extends Component {
 
     this.setState({
       allCountries,
+      filteredCountries: Object.assign([], allCountries),
+    })
+  }
+
+  handleChangeFilter = (newText) => {
+    this.setState({
+      filter: newText,
+    })
+
+    const filterLowerCase = newText.toLowerCase()
+
+    const filteredCountries = this.state.allCountries.filter((country) => {
+      return country.filterName.includes(filterLowerCase)
+    })
+
+    this.setState({
+      filteredCountries,
     })
   }
 
   render() {
-    const { allCountries } = this.state
-
-    console.log(allCountries)
+    const { filteredCountries, filter } = this.state
 
     return (
       <div className="container">
         <h1>React Countries</h1>
-        <Header />
+        <Header filter={filter} onChangeFilter={this.handleChangeFilter} />
 
-        <Countries countries={allCountries} />
+        <Countries countries={filteredCountries} />
       </div>
     )
   }
