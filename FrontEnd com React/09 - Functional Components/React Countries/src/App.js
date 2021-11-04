@@ -22,7 +22,7 @@ export default class App extends Component {
       .map(({ translations, ccn3, flags, population }) => {
         return {
           id: ccn3,
-          flag: flags.png,
+          flag: flags.svg,
           name: translations.por.common,
           filterName: translations.por.common.toLowerCase(),
           population,
