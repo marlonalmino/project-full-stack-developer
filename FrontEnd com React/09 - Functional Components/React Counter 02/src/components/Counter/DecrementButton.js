@@ -1,19 +1,23 @@
-import React, { Component } from 'react'
+import React from 'react'
 
-export default class DecrementButton extends Component {
+/* Pode ser passado um destructuring no parâmetro.
+Isso faz o mesmo que o código comentado da linha 8. 
+Obs.: É interessante utilizar em casos que tiver poucas props,
+para o parêntese do parâmetro não ficar muito grande*/
+export default function DecrementButton({ onDecrement }) {
+  // const { onDecrement } = props
 
-  handleButtonClick = () => {
-    this.props.onDecrement('-')
+  const handleButtonClick = () => {
+    onDecrement('-')
   }
 
-  render() {
-    return (
-      <button
-        onClick={this.handleButtonClick}
-        className='waves-effect waves-light 
-        btn red darken-4'>
-        -
-      </button>
-    )
-  }
+  return (
+    <button
+      onClick={handleButtonClick}
+      className="waves-effect waves-light 
+        btn red darken-4"
+    >
+      -
+    </button>
+  )
 }

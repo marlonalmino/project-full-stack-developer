@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 
 import css from './counter.module.css'
 import DecrementButton from './DecrementButton'
@@ -6,21 +6,19 @@ import IncrementButton from './IncrementButton'
 import Steps from './Steps'
 import Value from './Value'
 
-export default class Counter2 extends Component {
-  handleButtonClick = (clickType) => {
-    this.props.onCount(clickType)
+export default function Counter2(props) {
+  const { countValue, currentStep, onCount } = props
+
+  const handleButtonClick = (clickType) => {
+    onCount(clickType)
   }
 
-  render() {
-    const { countValue, currentStep } = this.props
-
-    return (
-      <div className={css.counterContainer}>
-        <DecrementButton onDecrement={this.handleButtonClick} />
-        <Value value={countValue} />
-        <IncrementButton onIncrement={this.handleButtonClick} />
-        <Steps currentSteps={currentStep} />
-      </div>
-    )
-  }
+  return (
+    <div className={css.counterContainer}>
+      <DecrementButton onDecrement={handleButtonClick} />
+      <Value value={countValue} />
+      <IncrementButton onIncrement={handleButtonClick} />
+      <Steps currentSteps={currentStep} />
+    </div>
+  )
 }
