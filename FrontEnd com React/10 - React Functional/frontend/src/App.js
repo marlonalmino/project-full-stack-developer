@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import Candidates from './components/Candidates'
 import Header from './components/Header'
 import Spinner from './components/Spinner'
 
@@ -35,13 +36,7 @@ export default class App extends Component {
     return (
       <div>
         <Header>Votação</Header>
-        {candidates.map(({ id, name, votes }) => {
-          return (
-            <p key={id}>
-              {name} - {votes}
-            </p>
-          )
-        })}
+        <Candidates candidates={candidates} />
       </div>
     )
   }
