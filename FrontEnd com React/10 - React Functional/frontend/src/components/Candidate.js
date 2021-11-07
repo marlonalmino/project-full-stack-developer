@@ -8,9 +8,13 @@ import Position from './Position'
 import Votes from './Votes'
 
 import css from './candidate.module.css'
-import { formatNumber, formatPercentage } from './Helpers/formatHelpers'
 
-export default function Candidate({ candidate, position }) {
+export default function Candidate({
+  previousVote,
+  previousPercentage,
+  candidate,
+  position,
+}) {
   const { id, name, votes, percentage, popularity } = candidate
 
   const imageSource = `${id}.jpg`
@@ -21,8 +25,13 @@ export default function Candidate({ candidate, position }) {
       <Picture imageSource={imageSource} description={name} />
       <Info>
         <Name>{name}</Name>
-        <Votes>{formatNumber(votes)}</Votes>
-        <Percentage>{formatPercentage(percentage)}</Percentage>
+
+        <Votes value={votes} previous={previousVote} />
+
+        <Percentage value={percentage} previous={previousPercentage}>
+          {percentage}
+        </Percentage>
+
         <Popularity value={popularity} />
       </Info>
     </div>
