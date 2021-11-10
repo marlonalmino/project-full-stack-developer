@@ -1,47 +1,72 @@
-import React, { Component } from 'react'
+import React, { useEffect, useState } from 'react'
 import Countries from './components/countries/Countries'
 import Header from './components/header/Header'
 
-export default class App extends Component {
-  constructor() {
-    super()
+export default function App() {
+  const [allCountries, setAllCountries] = useState([])
+  const [filteredCountries, setFilteredCountries] = useState([])
+  const [filteredPopulation, setFilteredPopulation] = useState(0)
+  const [userFilter, setUserFilter] = useState('')
 
-    this.state = {
-      allCountries: [],
-      filteredCountries: [],
-      filteredPopulation: 0,
-      filter: '',
+  /* Reference for Fetch Data with Hooks
+  https://www.robinwieruch.de/react-hooks-fetch-data */
+  useEffect(() => {
+    const getCountries = async () => {
+      const res = await fetch('https://restcountries.com/v3.1/all')
+      const json = await res.json()
+
+      const allCountries = json
+        .map(({ translations, ccn3, flags, population }) => {
+          return {
+            id: ccn3,
+            flag: flags.svg,
+            name: translations.por.common,
+            filterName: translations.por.common.toLowerCase(),
+            population,
+          }
+        })
+        .sort((a, b) => {
+          return a.name.localeCompare(b.name)
+        })
+
+      const filteredPopulation = calculatePopulationFrom(allCountries)
+
+      setAllCountries(allCountries)
+      setFilteredCountries(Object.assign([], allCountries))
+      setFilteredPopulation(filteredPopulation)
     }
-  }
 
-  async componentDidMount() {
-    const res = await fetch('https://restcountries.com/v3.1/all')
-    const json = await res.json()
+    getCountries()
+  }, [])
 
-    const allCountries = json
-      .map(({ translations, ccn3, flags, population }) => {
-        return {
-          id: ccn3,
-          flag: flags.svg,
-          name: translations.por.common,
-          filterName: translations.por.common.toLowerCase(),
-          population,
-        }
-      })
-      .sort((a, b) => {
-        return a.name.localeCompare(b.name)
-      })
+  // async componentDidMount() {
+  //   const res = await fetch('https://restcountries.com/v3.1/all')
+  //   const json = await res.json()
 
-    const filteredPopulation = this.calculatePopulationFrom(allCountries)
+  //   const allCountries = json
+  //     .map(({ translations, ccn3, flags, population }) => {
+  //       return {
+  //         id: ccn3,
+  //         flag: flags.svg,
+  //         name: translations.por.common,
+  //         filterName: translations.por.common.toLowerCase(),
+  //         population,
+  //       }
+  //     })
+  //     .sort((a, b) => {
+  //       return a.name.localeCompare(b.name)
+  //     })
 
-    this.setState({
-      allCountries,
-      filteredCountries: Object.assign([], allCountries),
-      filteredPopulation,
-    })
-  }
+  //   const filteredPopulation = this.calculatePopulationFrom(allCountries)
 
-  calculatePopulationFrom = (countries) => {
+  //   this.setState({
+  //     allCountries,
+  //     filteredCountries: Object.assign([], allCountries),
+  //     filteredPopulation,
+  //   })
+  // }
+
+  const calculatePopulationFrom = (countries) => {
     const totalPopulation = countries.reduce((accumulator, current) => {
       return accumulator + current.population
     }, 0)
@@ -49,43 +74,35 @@ export default class App extends Component {
     return totalPopulation
   }
 
-  handleChangeFilter = (newText) => {
-    this.setState({
-      filter: newText,
-    })
+  const handleChangeFilter = (newText) => {
+    setUserFilter(newText)
 
     const filterLowerCase = newText.toLowerCase()
 
-    const filteredCountries = this.state.allCountries.filter((country) => {
+    const filteredCountries = allCountries.filter((country) => {
       return country.filterName.includes(filterLowerCase)
     })
 
-    const filteredPopulation = this.calculatePopulationFrom(filteredCountries)
+    const filteredPopulation = calculatePopulationFrom(filteredCountries)
 
-    this.setState({
-      filteredCountries,
-      filteredPopulation,
-    })
+    setFilteredCountries(filteredCountries)
+    setFilteredPopulation(filteredPopulation)
   }
 
-  render() {
-    const { filteredCountries, filter, filteredPopulation } = this.state
+  return (
+    <div className="container">
+      <h1 style={styles.centeredTitle}>React Countries</h1>
 
-    return (
-      <div className="container">
-        <h1 style={styles.centeredTitle}>React Countries</h1>
+      <Header
+        filter={userFilter}
+        countryCount={filteredCountries.length}
+        totalPopulation={filteredPopulation}
+        onChangeFilter={handleChangeFilter}
+      />
 
-        <Header
-          filter={filter}
-          countryCount={filteredCountries.length}
-          totalPopulation={filteredPopulation}
-          onChangeFilter={this.handleChangeFilter}
-        />
-
-        <Countries countries={filteredCountries} />
-      </div>
-    )
-  }
+      <Countries countries={filteredCountries} />
+    </div>
+  )
 }
 
 const styles = {
