@@ -1,7 +1,14 @@
-import React, { Component } from 'react';
+import React from 'react'
 
-export default class App extends Component {
-  render() {
-    return <h1>Hello Hooks!</h1>;
+import * as api from './api/apiService'
+
+export default function App() {
+  const testApi = async () => {
+    const result = await api.getAllGrades()
+    console.log(result)
   }
+
+  testApi()
+
+  return <p>Hello Hooks!</p>
 }
