@@ -1,63 +1,52 @@
-import React, { Component } from 'react'
+import React, { useState, useEffect } from 'react'
 import Candidates from './components/Candidates'
 import Header from './components/Header'
 import Spinner from './components/Spinner'
 
-export default class App extends Component {
-  constructor() {
-    super()
+export default function App() {
+  const [candidates, setCandidates] = useState([])
+  const [previousVotes, setPreviousVotes] = useState([])
+  const [previousPercentage, setPreviousPercentage] = useState([])
 
-    this.state = {
-      candidates: [],
-      previousVotes: [],
-      previousPercentages: [],
-    }
-
-    this.interval = null
-  }
-
-  componentDidMount() {
-    this.interval = setInterval(() => {
+  useEffect(() => {
+    const interval = setInterval(() => {
       fetch('http://localhost:8080/votes')
         .then((res) => {
           return res.json()
         })
         .then((json) => {
-          const previousVotes = this.state.candidates.map(({ id, votes }) => {
+          const localPreviousVotes = candidates.map(({ id, votes }) => {
             return { id, votes }
           })
 
-          const previousPercentages = this.state.candidates.map(
+          const localPreviousPercentages = candidates.map(
             ({ id, percentage }) => {
               return { id, percentage }
             },
           )
 
-          this.setState({
-            candidates: json.candidates,
-            previousVotes,
-            previousPercentages,
-          })
+          setCandidates(json.candidates)
+          setPreviousVotes(localPreviousVotes)
+          setPreviousPercentage(localPreviousPercentages)
         })
     }, 1000)
-  }
-
-  render() {
-    const { previousVotes, candidates, previousPercentages } = this.state
-
-    if (candidates.length === 0) {
-      return <Spinner description="Carregando..." />
+    return () => {
+      clearInterval(interval)
     }
+  }, [candidates])
 
-    return (
-      <div className="container">
-        <Header>Votação</Header>
-        <Candidates
-          previousPercentages={previousPercentages}
-          previousVotes={previousVotes}
-          candidates={candidates}
-        />
-      </div>
-    )
+  if (candidates.length === 0) {
+    return <Spinner description="Carregando..." />
   }
+
+  return (
+    <div className="container">
+      <Header>Votação</Header>
+      <Candidates
+        previousPercentages={previousPercentage}
+        previousVotes={previousVotes}
+        candidates={candidates}
+      />
+    </div>
+  )
 }
