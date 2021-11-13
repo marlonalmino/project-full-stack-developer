@@ -26,7 +26,7 @@ export default function ModalGrade({ onSave, onClose, selectedGrade }) {
 
     if (gradeValue < minValue || gradeValue > maxValue) {
       setErrorMessage(
-        `O valor da nota deve ser entre ${minValue} e ${maxValue} (inclusive)`,
+        `O valor da nota deve ser entre ${minValue} e ${maxValue}`,
       )
 
       return
@@ -55,9 +55,23 @@ export default function ModalGrade({ onSave, onClose, selectedGrade }) {
     setGradeValue(+event.target.value)
   }
 
+  const handleClose = () => {
+    onClose(null)
+  }
+
   return (
     <div>
       <Modal isOpen={true}>
+        <div style={styles.flexRow}>
+          <span style={styles.title}>Manutenção de Notas</span>
+          <button
+            className="waves-effect waves-lights btn red dark-4"
+            onClick={handleClose}
+          >
+            X
+          </button>
+        </div>
+
         <form onSubmit={handleFormSubmit}>
           <div className="input-field">
             <input id="inputName" type="text" value={student} readOnly />
@@ -95,8 +109,38 @@ export default function ModalGrade({ onSave, onClose, selectedGrade }) {
               Nota:
             </label>
           </div>
+
+          <div style={styles.flexRow}>
+            <button
+              className="waves-effect waves-light btn"
+              disabled={errorMessage.trim() !== ''}
+            >
+              Salvar
+            </button>
+            <span style={styles.errorMessage}>{errorMessage}</span>
+          </div>
         </form>
       </Modal>
     </div>
   )
+}
+
+const styles = {
+  flexRow: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: '40px',
+  },
+
+  title: {
+    fontSize: '1.3rem',
+    fontWeight: 'bold',
+  },
+
+  errorMessage: {
+    color: 'red',
+    fontWeight: 'bold',
+  },
 }
