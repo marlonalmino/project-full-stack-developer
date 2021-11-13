@@ -49,7 +49,7 @@ export default function App() {
     setIsModalOpen(true)
   }
 
-  const handlePersistData = (formData) => {
+  const handlePersistData = async (formData) => {
     const { id, newValue } = formData
 
     const newGrades = Object.assign([], allGrades)
@@ -57,7 +57,12 @@ export default function App() {
     const gradeToPersist = newGrades.find((grade) => grade.id === id)
     gradeToPersist.value = newValue
 
-    console.log(gradeToPersist)
+    if (gradeToPersist.isDeleted) {
+      gradeToPersist.isDeleted = false
+      await api.insertGrade(gradeToPersist)
+    } else {
+      await api.updateGrade(gradeToPersist)
+    }
 
     setIsModalOpen(false)
   }
