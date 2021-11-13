@@ -6,7 +6,9 @@ import * as api from '../api/apiService'
 Modal.setAppElement('#root')
 
 export default function ModalGrade({ onSave, onClose, selectedGrade }) {
-  const [gradeValue, setGradeValue] = useState(selectedGrade.value)
+  const { id, student, subject, type, value } = selectedGrade
+
+  const [gradeValue, setGradeValue] = useState(value)
   const [gradeValidation, setGradeValidation] = useState({})
   const [errorMessage, setErrorMessage] = useState('')
 
@@ -29,9 +31,66 @@ export default function ModalGrade({ onSave, onClose, selectedGrade }) {
     setErrorMessage('')
   }, [gradeValue, gradeValidation])
 
+  useEffect(() => {
+    document.addEventListener('keydown', handleKeyDown)
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown)
+    }
+  })
+
+  const handleKeyDown = (event) => {
+    if (event.key === 'Escape') {
+      onClose(null)
+    }
+  }
+
+  const handleFormSubmit = (event) => {}
+
+  const handleGradeChange = (event) => {}
+
   return (
     <div>
-      <Modal isOpen={true} />
+      <Modal isOpen={true}>
+        <form onSubmit={handleFormSubmit}>
+          <div className="input-field">
+            <input id="inputName" type="text" value={student} readOnly />
+            <label className="active" htmlFor="inputName">
+              Nome do aluno:
+            </label>
+          </div>
+
+          <div className="input-field">
+            <input id="inputSubject" type="text" value={subject} readOnly />
+            <label className="active" htmlFor="inputSubject">
+              Disciplina:
+            </label>
+          </div>
+
+          <div className="input-field">
+            <input id="inputType" type="text" value={type} readOnly />
+            <label className="active" htmlFor="inputType">
+              Tipo de Avaliação:
+            </label>
+          </div>
+
+          <div className="input-field">
+            <input
+              id="inputGrade"
+              type="number"
+              min={gradeValidation.minValue}
+              max={gradeValidation.maxValue}
+              step="1"
+              autofocus
+              value={gradeValue}
+              onChange={handleGradeChange}
+            />
+            <label className="active" htmlFor="inputGrade">
+              Nota:
+            </label>
+          </div>
+        </form>
+      </Modal>
     </div>
   )
 }

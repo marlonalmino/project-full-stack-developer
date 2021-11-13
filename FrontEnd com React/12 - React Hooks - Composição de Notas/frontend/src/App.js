@@ -51,7 +51,9 @@ export default function App() {
 
   const handlePersistData = () => {}
 
-  const handleClose = () => {}
+  const handleClose = () => {
+    setIsModalOpen(false)
+  }
 
   return (
     <div>
