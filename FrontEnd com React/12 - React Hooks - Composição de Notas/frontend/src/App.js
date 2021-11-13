@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 
 import * as api from './api/apiService'
 import GradesControl from './components/GradesControl'
+import ModalGrade from './components/ModalGrade'
 import Spinner from './components/Spinner'
 
 export default function App() {
@@ -43,8 +44,9 @@ export default function App() {
     }
   }
 
-  const handlePersist = () => {
-    console.log('handlePersist')
+  const handlePersist = (grade) => {
+    setSelectedGrade(grade)
+    setIsModalOpen(true)
   }
 
   return (
@@ -60,6 +62,8 @@ export default function App() {
           onPersist={handlePersist}
         />
       )}
+
+      {isModalOpen && <ModalGrade />}
     </div>
   )
 }
