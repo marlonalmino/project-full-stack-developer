@@ -49,6 +49,10 @@ export default function App() {
     setIsModalOpen(true)
   }
 
+  const handlePersistData = () => {}
+
+  const handleClose = () => {}
+
   return (
     <div>
       <h1 className="center">Controle de Notas</h1>
@@ -63,7 +67,13 @@ export default function App() {
         />
       )}
 
-      {isModalOpen && <ModalGrade />}
+      {isModalOpen && (
+        <ModalGrade
+          onSave={handlePersistData}
+          onClose={handleClose}
+          selectedGrade={selectedGrade}
+        />
+      )}
     </div>
   )
 }
