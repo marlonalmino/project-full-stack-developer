@@ -49,13 +49,22 @@ export default function ModalGrade({ onSave, onClose, selectedGrade }) {
     }
   }
 
-  const handleFormSubmit = (event) => {}
+  const handleFormSubmit = (event) => {
+    event.preventDefault()
+
+    const formData = {
+      id,
+      newValue: gradeValue,
+    }
+
+    onSave(formData)
+  }
 
   const handleGradeChange = (event) => {
     setGradeValue(+event.target.value)
   }
 
-  const handleClose = () => {
+  const handleModalClose = () => {
     onClose(null)
   }
 
@@ -66,7 +75,7 @@ export default function ModalGrade({ onSave, onClose, selectedGrade }) {
           <span style={styles.title}>Manutenção de Notas</span>
           <button
             className="waves-effect waves-lights btn red dark-4"
-            onClick={handleClose}
+            onClick={handleModalClose}
           >
             X
           </button>

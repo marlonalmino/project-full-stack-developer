@@ -49,7 +49,18 @@ export default function App() {
     setIsModalOpen(true)
   }
 
-  const handlePersistData = () => {}
+  const handlePersistData = (formData) => {
+    const { id, newValue } = formData
+
+    const newGrades = Object.assign([], allGrades)
+
+    const gradeToPersist = newGrades.find((grade) => grade.id === id)
+    gradeToPersist.value = newValue
+
+    console.log(gradeToPersist)
+
+    setIsModalOpen(false)
+  }
 
   const handleClose = () => {
     setIsModalOpen(false)
