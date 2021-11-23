@@ -1,0 +1,6 @@
+# mongod --dbpath <args>
+mongod --dbpath C:\repo\Estudos\FullStack-with-Node\Database\data
+
+# initializate MONGODB
+# mongo -host localhost:<port> (view the port and localhost ip in previous command)
+mongo -host localhost:27017
